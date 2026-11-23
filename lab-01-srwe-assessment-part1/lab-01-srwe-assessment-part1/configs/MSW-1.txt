@@ -1,0 +1,42 @@
+! Configuration commands used in this lab (not a running-config export)
+ip routing
+
+vlan 10
+ name SALES
+vlan 20
+ name ACCT
+vlan 30
+ name EXEC
+
+interface range GigabitEthernet1/0/1-2
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 1 mode active
+interface Port-channel1
+ switchport mode trunk
+ switchport nonegotiate
+
+interface range GigabitEthernet1/0/3-4
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 2 mode active
+interface Port-channel2
+ switchport mode trunk
+ switchport nonegotiate
+
+interface GigabitEthernet1/1/1
+ description Link to RTR-1 G0/0/0
+ no switchport
+ ip address 10.0.0.2 255.255.255.0
+ no shutdown
+interface Vlan10
+ description SALES gateway
+ ip address 10.0.10.1 255.255.255.0
+interface Vlan20
+ description ACCT gateway
+ ip address 10.0.20.1 255.255.255.0
+interface Vlan30
+ description EXEC gateway
+ ip address 10.0.30.1 255.255.255.0
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
