@@ -1,0 +1,47 @@
+! Configuration commands used in this lab (not a running-config export)
+hostname RTR-1
+no ip domain-lookup
+enable secret <REDACTED>
+service password-encryption
+banner motd #Authorized access only! Violators will be prosecuted.#
+
+ip route 10.0.10.0 255.255.255.0 GigabitEthernet0/0/0
+ip route 10.0.20.0 255.255.255.0 GigabitEthernet0/0/0
+ip route 10.0.30.0 255.255.255.0 GigabitEthernet0/0/0
+
+line console 0
+ password <REDACTED>
+ login
+ logging synchronous
+line vty 0 4
+ password <REDACTED>
+ login
+
+interface GigabitEthernet0/0/0
+ description Link to MSW-1 G1/1/1
+ ip address 10.0.0.1 255.255.255.0
+ no shutdown
+interface Serial0/1/0
+ description Link to Internet (ISP)
+ ip address 209.165.201.2 255.255.255.252
+ no shutdown
+
+interface GigabitEthernet0/0/1
+ description Trunk to SW-3
+ no shutdown
+interface GigabitEthernet0/0/1.40
+ description FAC VLAN 40
+ encapsulation dot1Q 40
+ ip address 10.0.40.1 255.255.255.0
+interface GigabitEthernet0/0/1.50
+ description FAB1 VLAN 50
+ encapsulation dot1Q 50
+ ip address 10.0.50.1 255.255.255.0
+interface GigabitEthernet0/0/1.60
+ description FAB2 VLAN 60
+ encapsulation dot1Q 60
+ ip address 10.0.60.1 255.255.255.0
+interface GigabitEthernet0/0/1.99
+ description ADMIN VLAN 99
+ encapsulation dot1Q 99 native
+ ip address 10.0.99.17 255.255.255.240
