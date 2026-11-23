@@ -1,0 +1,26 @@
+! Output captured during the lab
+
+--- SW-2: show etherchannel summary (before the fix) ---
+Group  Port-channel  Protocol  Ports
+2      Po2(SD)       LACP      Gig0/1(s) Gig0/2(s)
+3      Po3(SD)       LACP      Fa0/5(D)  Fa0/6(D)
+
+--- SW-2: log message that identified the cause ---
+%EC-5-CANNOT_BUNDLE2: Gig0/2 is not compatible with Gig0/1 and will be
+suspended (duplex of Gig0/2 is half, Gig0/1 is full)
+
+--- SW-1: show etherchannel summary ---
+Group  Port-channel  Protocol  Ports
+1      Po1(SU)       LACP      Gig0/1(P) Gig0/2(P)
+3      Po3(SU)       LACP      Fa0/5(P)  Fa0/6(P)
+
+--- SW-2: show etherchannel summary (Group 3 formed) ---
+2      Po2(SD)       LACP      Gig0/1(s) Gig0/2(s)
+3      Po3(SU)       LACP      Fa0/5(P)  Fa0/6(P)
+
+--- SW-2: show interfaces trunk ---
+Port  Mode  Encapsulation  Status    Native vlan
+Po2   on    802.1q         trunking  1
+Po3   on    802.1q         trunking  1
+Vlans allowed and active in management domain: 1,10,20,30
+Spanning tree forwarding: Po2 = 1,10,20,30 ; Po3 = none (redundant path blocked by STP)
