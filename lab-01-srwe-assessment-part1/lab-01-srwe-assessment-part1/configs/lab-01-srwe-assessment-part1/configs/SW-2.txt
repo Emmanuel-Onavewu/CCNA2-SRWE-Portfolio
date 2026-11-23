@@ -1,0 +1,37 @@
+! Configuration commands used in this lab (not a running-config export)
+vlan 10
+ name SALES
+vlan 20
+ name ACCT
+vlan 30
+ name EXEC
+
+interface range FastEthernet0/7-10
+ switchport mode access
+ switchport access vlan 10
+interface range FastEthernet0/11-15
+ switchport mode access
+ switchport access vlan 20
+interface range FastEthernet0/16-24
+ switchport mode access
+ switchport access vlan 30
+
+! Group 2 members: duplex and speed set to match on both ends
+! (fix for the CANNOT_BUNDLE2 duplex mismatch)
+interface range GigabitEthernet0/1-2
+ duplex full
+ speed 1000
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 2 mode active
+interface Port-channel2
+ switchport mode trunk
+ switchport nonegotiate
+
+interface range FastEthernet0/5-6
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 3 mode active
+interface Port-channel3
+ switchport mode trunk
+ switchport nonegotiate
