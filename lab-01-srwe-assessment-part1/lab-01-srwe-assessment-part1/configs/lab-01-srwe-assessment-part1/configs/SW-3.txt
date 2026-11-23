@@ -1,0 +1,44 @@
+! Configuration commands used in this lab (not a running-config export)
+hostname SW-3
+ip domain-name acad.pt
+username admin secret <REDACTED>
+crypto key generate rsa general-keys modulus 1024
+ip ssh version 2
+
+vlan 40
+ name FAC
+vlan 50
+ name FAB1
+vlan 60
+ name FAB2
+vlan 99
+ name ADMIN
+
+interface range FastEthernet0/1-5
+ switchport mode access
+ switchport access vlan 40
+interface range FastEthernet0/6-10
+ switchport mode access
+ switchport access vlan 50
+interface range FastEthernet0/11-15
+ switchport mode access
+ switchport access vlan 60
+interface FastEthernet0/24
+ switchport mode access
+ switchport access vlan 99
+
+! Uplink to RTR-1 (replace with the real port number)
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport nonegotiate
+
+interface Vlan99
+ description Management SVI
+ ip address 10.0.99.18 255.255.255.240
+ no shutdown
+ip default-gateway 10.0.99.17
+
+line vty 0 15
+ transport input ssh
+ login local
